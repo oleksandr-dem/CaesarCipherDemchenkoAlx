@@ -1,0 +1,19 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# IntelliJ IDEA #
+out/
+production/
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Compiled class file
+*.class
+
+# Other stuff
+META-INF/
+*.txt
