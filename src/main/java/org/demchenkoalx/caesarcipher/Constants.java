@@ -2,6 +2,9 @@ package org.demchenkoalx.caesarcipher;
 
 public class Constants {
 
+    /**
+     * Uncomment lines with numbers or/and symbols to make cipher more complex.
+     */
     public final String ALPHABET_EN =
 //                    "0123456789" +
 //                    " !'\"`’()*+-=_.,/|\\:;?#%@[]{}<>^~«»&$¡¢£¤¥¦§¨©®¬¯°±º×¿" +
@@ -12,13 +15,19 @@ public class Constants {
             "which", "she", "how", "their", "will", "other", "about", "out", "many", "then", "them", "these", "some",
             "her", "would", "make", "like", "him", "into", "time", "has", "look", "two", "more", "write", "see",
             "number", "way", "could", "people", "than", "first", "water", "been", "call", "who", "oil", "its", "now",
-            "find", "long",  "down", "day", "did", "get", "come", "made", "may", "part", "over", "new", "sound", "take",
+            "find", "long", "down", "day", "did", "get", "come", "made", "may", "part", "over", "new", "sound", "take",
             "only", "little", "work", "know", "place", "year", "live", "back", "give", "most", "very", "after", "thing",
             "our", "just", "name", "good", "sentence", "man", "think", "say", "great", "where", "help", "through",
             "much", "before", "line", "right", "too", "means", "old", "any", "same", "tell", "boy", "follow", "came",
             "want", "show", "also", "around", "farm", "three", "small", "set", "put", "end", "pray", "exit", "four",
             "five", "six", "seven", "eight", "nine", "ten", "hundred", "thousand", "number", "letter"
     };
+    public final String WRONG_ARGUMENT =
+            """
+
+                    >>>>>>> Invalid action or offset arguments entered.
+                    >>>>>>> Starting console client.\
+                    """;
     public final String MAIN_MENU =
             """
 

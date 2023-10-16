@@ -41,53 +41,59 @@ public class FileService {
      * Saves the given strings to a file with a modified file path based on the specified action.
      *
      * @param strings the strings to save to the file
-     * @param action  the action performed on the file (encrypt, decrypt, brute force)
+     * @param action  the action performed on the file (encrypt, decrypt, brute_force)
      */
-    public void saveFile(ArrayList<String> strings, String action) throws IOException {
-        FileWriter fileWriter = new FileWriter(getNewFilePath(filePath, action));
+    public void saveFile(ArrayList<String> strings, Actions action) throws IOException {
+        String newFilePath = getNewFilePath(filePath, action);
+        FileWriter fileWriter = new FileWriter(newFilePath);
 
         for (String line : strings) {
             fileWriter.write(line + System.lineSeparator());
         }
 
         fileWriter.close();
+
+        RandomAccessFile randomAccessFileObject = new RandomAccessFile(newFilePath, "rw");
+        long length = randomAccessFileObject.length() - 2;
+        randomAccessFileObject.setLength(length);
+        randomAccessFileObject.close();
     }
 
     /**
      * Generates a new file path based on the specified old file path and action.
      *
      * @param oldFilePath the old file path
-     * @param action      the action performed on the file (encrypt, decrypt, brute force)
+     * @param action      the action performed on the file (encrypt, decrypt, brute_force)
      * @return the new file path with action modifier added
      */
-    public String getNewFilePath(String oldFilePath, String action) {
+    public String getNewFilePath(String oldFilePath, Actions action) {
         int dotIndex = oldFilePath.lastIndexOf(".");
         int actionIndex = oldFilePath.lastIndexOf("[");
-        String newFileName;
+        String newFilePath;
 
-        if (action.equalsIgnoreCase(String.valueOf(Actions.ENCRYPT))) {
-            newFileName = oldFilePath.substring(0, dotIndex) + "[" +
+        if (action.toString().equalsIgnoreCase(String.valueOf(Actions.ENCRYPT))) {
+            newFilePath = oldFilePath.substring(0, dotIndex) + "[" +
                     Actions.ENCRYPT + "ED" + "]" + oldFilePath.substring(dotIndex);
-        } else if (action.equalsIgnoreCase(String.valueOf(Actions.DECRYPT))) {
+        } else if (action.toString().equalsIgnoreCase(String.valueOf(Actions.DECRYPT))) {
             if (oldFilePath.contains("[ENCRYPTED]")) {
-                newFileName = oldFilePath.substring(0, actionIndex) + "[" +
+                newFilePath = oldFilePath.substring(0, actionIndex) + "[" +
                         Actions.DECRYPT + "ED" + "]" + oldFilePath.substring(dotIndex);
             } else {
-                newFileName = oldFilePath.substring(0, dotIndex) + "[" +
+                newFilePath = oldFilePath.substring(0, dotIndex) + "[" +
                         Actions.DECRYPT + "ED" + "]" + oldFilePath.substring(dotIndex);
             }
-        } else if (action.equalsIgnoreCase(String.valueOf(Actions.BRUTE_FORCE))) {
+        } else if (action.toString().equalsIgnoreCase(String.valueOf(Actions.BRUTE_FORCE))) {
             if (oldFilePath.contains("[ENCRYPTED]")) {
-                newFileName = oldFilePath.substring(0, actionIndex) + "[" +
+                newFilePath = oldFilePath.substring(0, actionIndex) + "[" +
                         Actions.BRUTE_FORCE + "_" + Actions.DECRYPT + "ED" + "]" + oldFilePath.substring(dotIndex);
             } else {
-                newFileName = oldFilePath.substring(0, dotIndex) + "[" +
+                newFilePath = oldFilePath.substring(0, dotIndex) + "[" +
                         Actions.BRUTE_FORCE + "_" + Actions.DECRYPT + "ED" + "]" + oldFilePath.substring(dotIndex);
             }
         } else {
-            newFileName = oldFilePath.substring(0, dotIndex) + "[ERR]" + oldFilePath.substring(dotIndex);
+            newFilePath = oldFilePath.substring(0, dotIndex) + "[ERR]" + oldFilePath.substring(dotIndex);
         }
 
-        return newFileName;
+        return newFilePath;
     }
 }

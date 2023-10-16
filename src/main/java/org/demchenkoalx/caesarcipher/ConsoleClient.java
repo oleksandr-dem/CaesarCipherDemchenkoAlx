@@ -11,9 +11,8 @@ public class ConsoleClient {
      * @param fileService   the FileService object used for file operations
      * @param cryptographer the CaesarCipher object used for encryption and decryption
      */
-    public void run(FileService fileService, CaesarCipher cryptographer) throws IOException {
+    public void run(FileService fileService, CaesarCipher cryptographer, Constants constants) throws IOException {
         int offset;
-        Constants constants = cryptographer.constants;
         Scanner scanner = new Scanner(System.in);
         System.out.print(constants.MAIN_MENU);
         int actionNumber = 0;
@@ -22,7 +21,7 @@ public class ConsoleClient {
             actionNumber = scanner.nextInt();
         } else {
             System.out.println(constants.WRONG_ACTION);
-            run(fileService, cryptographer);
+            run(fileService, cryptographer, constants);
         }
 
         switch (actionNumber) {
@@ -37,7 +36,7 @@ public class ConsoleClient {
                     System.out.println(constants.FILE_SAVED);
                 } catch (IOException e) {
                     printFileNotFoundException(e);
-                    run(fileService, cryptographer);
+                    run(fileService, cryptographer, constants);
                 }
             }
             case 2 -> {
@@ -51,7 +50,7 @@ public class ConsoleClient {
                     System.out.println(constants.FILE_SAVED);
                 } catch (IOException e) {
                     printFileNotFoundException(e);
-                    run(fileService, cryptographer);
+                    run(fileService, cryptographer, constants);
                 }
             }
             case 3 -> {
@@ -63,12 +62,12 @@ public class ConsoleClient {
                     System.out.println(constants.FILE_SAVED);
                 } catch (IOException e) {
                     printFileNotFoundException(e);
-                    run(fileService, cryptographer);
+                    run(fileService, cryptographer, constants);
                 }
             }
             default -> {
                 System.out.println(constants.WRONG_ACTION);
-                run(fileService, cryptographer);
+                run(fileService, cryptographer, constants);
             }
         }
 
