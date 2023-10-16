@@ -4,13 +4,15 @@ import java.io.IOException;
 
 public class Runner {
 
-    ConsoleClient cli;
-    FileService fileService;
-    CaesarCipher cryptographer;
+    private final ConsoleClient cli;
+    private final FileService fileService;
+    private final CaesarCipher cryptographer;
+    private final Constants constants;
 
-    public Runner(FileService fileService, CaesarCipher cryptographer) {
+    public Runner(FileService fileService, CaesarCipher cryptographer, Constants constants) {
         this.fileService = fileService;
         this.cryptographer = cryptographer;
+        this.constants = constants;
         this.cli = new ConsoleClient();
     }
 
@@ -35,21 +37,17 @@ public class Runner {
                 } else if (action.equalsIgnoreCase(Actions.BRUTE_FORCE.toString())) {
                     cryptographer.bruteForce(fileService);
                 } else {
-                    System.out.println("""
-
-                             >>>>>>> Invalid action or offset arguments entered.
-                             >>>>>>> Starting console client.\
-                            """);
-                    cli.run(fileService, cryptographer);
+                    System.out.println(constants.WRONG_ARGUMENT);
+                    cli.run(fileService, cryptographer, constants);
                 }
             } catch (IOException e) {
                 System.out.println("\n >>>>>>> Invalid filepath: " + e.getMessage() +
                         "\n >>>>>>> Starting console client.");
-                cli.run(fileService, cryptographer);
+                cli.run(fileService, cryptographer, constants);
             }
         } else {
             System.out.println("\nWelcome User!\nThis is Cipher Caesar Cryptographer.");
-            cli.run(fileService, cryptographer);
+            cli.run(fileService, cryptographer, constants);
         }
     }
 }

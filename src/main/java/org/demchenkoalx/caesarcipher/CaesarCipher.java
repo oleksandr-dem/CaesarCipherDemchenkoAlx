@@ -7,9 +7,7 @@ import java.util.Scanner;
 
 public class CaesarCipher {
 
-    Constants constants;
-    ArrayList<String> originalLinesList;
-    ArrayList<String> resultLinesList;
+    private final Constants constants;
 
     public CaesarCipher(Constants constants) {
         this.constants = constants;
@@ -22,7 +20,7 @@ public class CaesarCipher {
      * @param offset     the offset used for shifting characters in the alphabet
      * @return the ciphered text
      */
-    public String cipher(String cipherLine, int offset) {
+    private String cipher(String cipherLine, int offset) {
         StringBuilder result = new StringBuilder();
 
         for (char ch : cipherLine.toCharArray()) {
@@ -44,12 +42,12 @@ public class CaesarCipher {
      * @param offset      the offset used for encrypting the file
      */
     public void encrypt(FileService fileService, int offset) throws IOException {
-        originalLinesList = new ArrayList<>(fileService.readFile());
-        resultLinesList = new ArrayList<>();
+        ArrayList<String> originalLinesList = new ArrayList<>(fileService.readFile());
+        ArrayList<String> resultLinesList = new ArrayList<>();
         for (String line : originalLinesList) {
             resultLinesList.add(cipher(line, Math.abs(offset) % constants.getAlphabetLength()));
         }
-        fileService.saveFile(resultLinesList, String.valueOf(Actions.ENCRYPT));
+        fileService.saveFile(resultLinesList, Actions.ENCRYPT);
     }
 
     /**
@@ -60,13 +58,13 @@ public class CaesarCipher {
      * @param offset      the offset used for decrypting the file
      */
     public void decrypt(FileService fileService, int offset) throws IOException {
-        originalLinesList = new ArrayList<>(fileService.readFile());
-        resultLinesList = new ArrayList<>();
+        ArrayList<String> originalLinesList = new ArrayList<>(fileService.readFile());
+        ArrayList<String> resultLinesList = new ArrayList<>();
         for (String line : originalLinesList) {
             resultLinesList.add(cipher(line, constants.getAlphabetLength() -
                     (Math.abs(offset) % constants.getAlphabetLength())));
         }
-        fileService.saveFile(resultLinesList, String.valueOf(Actions.DECRYPT));
+        fileService.saveFile(resultLinesList, Actions.DECRYPT);
     }
 
     /**
@@ -95,13 +93,13 @@ public class CaesarCipher {
             for (String word : tempListOfWordsWithOffset) {
                 for (String commonWord : constants.COMMON_WORDS) {
                     if (word.equals(String.valueOf(commonWord))) {
-                        originalLinesList = new ArrayList<>(fileService.readFile());
-                        resultLinesList = new ArrayList<>();
+                        ArrayList<String> originalLinesList = new ArrayList<>(fileService.readFile());
+                        ArrayList<String> resultLinesList = new ArrayList<>();
                         for (String line : originalLinesList) {
                             resultLinesList.add(cipher(line,
                                     (constants.getAlphabetLength()) - (offset % (constants.getAlphabetLength()))));
                         }
-                        fileService.saveFile(resultLinesList, String.valueOf(Actions.BRUTE_FORCE));
+                        fileService.saveFile(resultLinesList, Actions.BRUTE_FORCE);
                         break;
                     }
                 }

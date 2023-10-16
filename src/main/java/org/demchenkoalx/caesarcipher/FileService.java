@@ -41,9 +41,9 @@ public class FileService {
      * Saves the given strings to a file with a modified file path based on the specified action.
      *
      * @param strings the strings to save to the file
-     * @param action  the action performed on the file (encrypt, decrypt, brute force)
+     * @param action  the action performed on the file (encrypt, decrypt, brute_force)
      */
-    public void saveFile(ArrayList<String> strings, String action) throws IOException {
+    public void saveFile(ArrayList<String> strings, Actions action) throws IOException {
         FileWriter fileWriter = new FileWriter(getNewFilePath(filePath, action));
 
         for (String line : strings) {
@@ -57,18 +57,18 @@ public class FileService {
      * Generates a new file path based on the specified old file path and action.
      *
      * @param oldFilePath the old file path
-     * @param action      the action performed on the file (encrypt, decrypt, brute force)
+     * @param action      the action performed on the file (encrypt, decrypt, brute_force)
      * @return the new file path with action modifier added
      */
-    public String getNewFilePath(String oldFilePath, String action) {
+    public String getNewFilePath(String oldFilePath, Actions action) {
         int dotIndex = oldFilePath.lastIndexOf(".");
         int actionIndex = oldFilePath.lastIndexOf("[");
         String newFileName;
 
-        if (action.equalsIgnoreCase(String.valueOf(Actions.ENCRYPT))) {
+        if (action.toString().equalsIgnoreCase(String.valueOf(Actions.ENCRYPT))) {
             newFileName = oldFilePath.substring(0, dotIndex) + "[" +
                     Actions.ENCRYPT + "ED" + "]" + oldFilePath.substring(dotIndex);
-        } else if (action.equalsIgnoreCase(String.valueOf(Actions.DECRYPT))) {
+        } else if (action.toString().equalsIgnoreCase(String.valueOf(Actions.DECRYPT))) {
             if (oldFilePath.contains("[ENCRYPTED]")) {
                 newFileName = oldFilePath.substring(0, actionIndex) + "[" +
                         Actions.DECRYPT + "ED" + "]" + oldFilePath.substring(dotIndex);
@@ -76,7 +76,7 @@ public class FileService {
                 newFileName = oldFilePath.substring(0, dotIndex) + "[" +
                         Actions.DECRYPT + "ED" + "]" + oldFilePath.substring(dotIndex);
             }
-        } else if (action.equalsIgnoreCase(String.valueOf(Actions.BRUTE_FORCE))) {
+        } else if (action.toString().equalsIgnoreCase(String.valueOf(Actions.BRUTE_FORCE))) {
             if (oldFilePath.contains("[ENCRYPTED]")) {
                 newFileName = oldFilePath.substring(0, actionIndex) + "[" +
                         Actions.BRUTE_FORCE + "_" + Actions.DECRYPT + "ED" + "]" + oldFilePath.substring(dotIndex);

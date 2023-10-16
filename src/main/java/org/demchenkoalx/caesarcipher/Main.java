@@ -13,7 +13,7 @@ public class Main {
         Constants constants = new Constants();
         FileService fileService = new FileService();
         CaesarCipher cryptographer =  new CaesarCipher(constants);
-        Runner runner = new Runner(fileService, cryptographer);
+        Runner runner = new Runner(fileService, cryptographer, constants);
         runner.run(args);
     }
 }
