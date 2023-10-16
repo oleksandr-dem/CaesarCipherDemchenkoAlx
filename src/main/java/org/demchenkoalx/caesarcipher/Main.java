@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Constants constants = new Constants();
         FileService fileService = new FileService();
-        CaesarCipher cryptographer =  new CaesarCipher(constants);
+        CaesarCipher cryptographer = new CaesarCipher(constants);
         Runner runner = new Runner(fileService, cryptographer, constants);
         runner.run(args);
     }

@@ -2,6 +2,9 @@ package org.demchenkoalx.caesarcipher;
 
 public class Constants {
 
+    /**
+     * Uncomment lines with numbers or/and symbols to make cipher more complex.
+     */
     public final String ALPHABET_EN =
 //                    "0123456789" +
 //                    " !'\"`’()*+-=_.,/|\\:;?#%@[]{}<>^~«»&$¡¢£¤¥¦§¨©®¬¯°±º×¿" +
